@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 
+app.use(express.json())
+
 
 // ############################ FIRST PART (GET)
 
@@ -30,12 +32,33 @@ app.get("/api/courses/:id", (req, res) => {
 
     if (!course) {
         res.status(404).send("The course with the given ID was not found!")
-    } else {
-        res.send(course)
     }
 
+    res.send(course)
 })
 
+
+
+
+// ############################ THIRD PART (POST)
+
+app.post("/api/courses", (req, res) => {
+
+    // check input validation
+    if (!req.body.name || req.body.name.length < 3) {
+        // 400 Bad Request
+        res.status(400).send("Name is required and should be minimum 3 character")
+        return; // if true => the method will not be executed
+    }
+
+    const course = {
+        id: courses.length + 1,
+        name: req.body.name
+    }
+
+    courses.push(course)
+    res.send(course)
+})
 
 
 const port = process.env.PORT || 3000
