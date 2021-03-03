@@ -51,24 +51,28 @@ app.post("/api/courses", (req, res) => {
         name: req.body.name
     }
 
-    // VALIDATION
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    });
+    // call validation function
+    const result = validationHandle(req.body)
 
-    const validation = schema.validate(req.body);
-
-    if (validation.error) {
-        res.status(400).send(validation.error)
-        return;
+    if (result.error) {
+        res.status(400).send(result.error.details)
+        return
     }
-
 
     courses.push(course)
     res.send(course)
 })
 
 
+
+// function
+function validationHandle(course) {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+    });
+
+    return schema.validate(course);
+}
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Server started on PORT ${port}`)) 
