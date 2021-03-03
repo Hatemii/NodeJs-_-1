@@ -46,36 +46,27 @@ app.get("/api/courses/:id", (req, res) => {
 
 app.post("/api/courses", (req, res) => {
 
-    // Joi validation
+    const course = {
+        id: courses.length + 1,
+        name: req.body.name
+    }
+
+    // VALIDATION
     const schema = Joi.object({
         name: Joi.string().min(3).required()
     });
 
     const validation = schema.validate(req.body);
 
-    // check input validation
-    if (validation) {
-        // 400 Bad Request
+    if (validation.error) {
         res.status(400).send(validation.error)
-        return; // if true => the method will not be executed
+        return;
     }
 
-    const course = {
-        id: courses.length + 1,
-        name: req.body.name
-    }
 
     courses.push(course)
     res.send(course)
 })
-
-// test this method in Postman
-// {
-//     "name": "as"
-// } 
-
-
-
 
 
 
