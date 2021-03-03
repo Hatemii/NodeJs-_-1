@@ -52,14 +52,36 @@ app.post("/api/courses", (req, res) => {
     }
 
     // call validation function
-    const result = validationHandle(req.body)
+    const { error } = validationHandle(req.body)
 
-    if (result.error) {
-        res.status(400).send(result.error.details)
+    if (error) {
+        res.status(400).send(error.details)
         return
     }
 
     courses.push(course)
+    res.send(course)
+})
+
+
+
+// ############################ FOURTH PART (PUT)
+app.put("/api/courses/:id", (req, res) => {
+    const course = courses.find(c => c.id === parseInt(req.params.id)) // this return String so we need to convert it 
+
+    if (!course) {
+        res.status(404).send("The course with the given ID was not found!")
+    }
+
+    // call validation function
+    const { error } = validationHandle(req.body)
+
+    if (error) {
+        res.status(400).send(error.details)
+        return
+    }
+
+    course.name = req.body.name
     res.send(course)
 })
 
