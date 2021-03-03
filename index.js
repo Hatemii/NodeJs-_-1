@@ -33,7 +33,7 @@ app.get("/api/courses/:id", (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id)) // this return String so we need to convert it 
 
     if (!course) {
-        res.status(404).send("The course with the given ID was not found!")
+        return res.status(404).send("The course with the given ID was not found!")
     }
 
     res.send(course)
@@ -55,8 +55,7 @@ app.post("/api/courses", (req, res) => {
     const { error } = validationHandle(req.body)
 
     if (error) {
-        res.status(400).send(error.details)
-        return
+        return res.status(400).send(error.details)
     }
 
     courses.push(course)
@@ -66,22 +65,38 @@ app.post("/api/courses", (req, res) => {
 
 
 // ############################ FOURTH PART (PUT)
+
 app.put("/api/courses/:id", (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id)) // this return String so we need to convert it 
 
     if (!course) {
-        res.status(404).send("The course with the given ID was not found!")
+        return res.status(404).send("The course with the given ID was not found!")
     }
 
     // call validation function
     const { error } = validationHandle(req.body)
 
     if (error) {
-        res.status(400).send(error.details)
-        return
+        return res.status(400).send(error.details)
     }
 
     course.name = req.body.name
+    res.send(course)
+})
+
+
+// ############################ FIFTH PART (DELETE)
+
+app.delete("/api/courses/:id", (req, res) => {
+    const course = courses.find(c => c.id === parseInt(req.params.id)) // this return String so we need to convert it 
+
+    if (!course) {
+        return res.status(404).send("The course with the given ID was not found!")
+    }
+
+    const index = courses.indexOf(course)
+
+    courses.splice(index, 1)
     res.send(course)
 })
 
