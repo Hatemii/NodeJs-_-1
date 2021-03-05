@@ -23,7 +23,6 @@ router.get("/:id", async (req, res) => {
     } catch (err) {
         res.json({ message: err })
     }
-
 })
 
 // Create Post
@@ -42,6 +41,16 @@ router.post("/", async (req, res) => {
 
 })
 
+
+// Delete Post
+router.delete("/:id", async (req, res) => {
+    try {
+        const deleteById = await Post.deleteOne({ _id: req.params.id })
+        res.json(deleteById)
+    } catch (err) {
+        res.json({ message: err })
+    }
+})
 
 
 module.exports = router
