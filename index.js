@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const Joi = require("joi")
-
+const mongoose = require("mongoose")
 
 app.use(express.json())
 
@@ -126,6 +126,19 @@ function validationHandle(course) {
 
     return schema.validate(course);
 }
+
+
+
+// browser url to find mongo link --> https://cloud.mongodb.com/v2/60422beef8d11a1bdf2ddccd#clusters
+// Database connection
+mongoose.connect(
+    "mongodb+srv://user:user123@realmcluster.vgqgf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    { useNewUrlParser: true },
+    () => {
+        console.log("connected to Database")
+    }
+)
+
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Server started on PORT ${port}`))
