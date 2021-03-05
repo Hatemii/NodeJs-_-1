@@ -6,6 +6,7 @@ const Joi = require("joi")
 app.use(express.json())
 
 
+
 // ############################ FIRST PART (GET)
 
 // GET REQUESTS
@@ -16,6 +17,21 @@ app.get("/", (req, res) => {
 app.get("/api/courses", (req, res) => {
     res.send(courses)
 })
+
+
+// First Middleware Example 
+// Middleware is a function that get executed everytime when a specific route are being hit
+
+// Example 1 -> Middleware needs to be before of requests (get,post . . .) 
+app.use("/example", () => {
+    console.log("This is from Middleware"); // --> check in console this text if it works
+})
+
+app.get("/example", (req, res) => {
+    res.send("Hello Middleware Example")
+})
+
+
 
 
 
@@ -112,4 +128,4 @@ function validationHandle(course) {
 }
 
 const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Server started on PORT ${port}`)) 
+app.listen(port, () => console.log(`Server started on PORT ${port}`))
