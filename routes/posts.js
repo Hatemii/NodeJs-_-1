@@ -1,12 +1,32 @@
 const express = require("express")
+const { array } = require("joi")
 const router = express.Router()
 const Post = require("../model/post")
 
-router.get("/", (req, res) => {
-    res.send("we are on post")
+
+// Get All Posts
+router.get("/", async (req, res) => {
+    try {
+        const getPosts = await Post.find()
+        res.json(getPosts)
+    } catch (err) {
+        res.json({ message: err })
+    }
+
 })
 
+// Get Post By Id
+router.get("/:id", async (req, res) => {
+    try {
+        const getPostById = await Post.findById(req.params.id)
+        res.json(getPostById)
+    } catch (err) {
+        res.json({ message: err })
+    }
 
+})
+
+// Create Post
 router.post("/", async (req, res) => {
     const post = new Post({
         title: req.body.title,
