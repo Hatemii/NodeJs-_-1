@@ -3,6 +3,7 @@ const app = express()
 const Joi = require("joi")
 const mongoose = require("mongoose")
 require("dotenv/config")
+const Example = require("./routes/example")
 
 app.use(express.json())
 
@@ -24,16 +25,9 @@ app.get("/api/courses", (req, res) => {
 // Middleware is a function that get executed everytime when a specific route are being hit
 
 // Example 1 -> Middleware needs to be before of requests (get,post . . .) 
-app.use("/example", () => {
-    console.log("This is from Middleware"); // --> check in console this text if it works
-})
 
-app.get("/example", (req, res) => {
-    res.send("Hello Middleware Example")
-})
-
-
-
+app.use("/example", Example)
+// on this route "/example" run Example class
 
 
 // ############################ SECOND PART (GET/:id)
