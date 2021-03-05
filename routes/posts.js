@@ -1,5 +1,6 @@
 const express = require("express")
 const { array } = require("joi")
+const { set } = require("mongoose")
 const router = express.Router()
 const Post = require("../model/post")
 
@@ -40,6 +41,26 @@ router.post("/", async (req, res) => {
     }
 
 })
+
+
+// Update By Id
+router.put("/:id", async (req, res) => {
+    try {
+        const updateRecord = await Post.updateOne(
+            { _id: req.params.id },
+            {
+                $set: {
+                    title: req.body.title,
+                    description: req.body.description
+                }
+            }
+        )
+        res.json(updateRecord)
+    } catch (err) {
+        res.json({ message: err })
+    }
+})
+
 
 
 // Delete Post
