@@ -1,6 +1,4 @@
 const express = require("express")
-const { array } = require("joi")
-const { set } = require("mongoose")
 const router = express.Router()
 const Post = require("../model/post")
 

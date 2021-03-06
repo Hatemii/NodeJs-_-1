@@ -5,6 +5,9 @@ require("dotenv/config")
 const ApiHandle = require("./routes/Api")
 const PostMethod = require("./routes/posts")
 const bodyParser = require("body-parser")
+const cors = require("cors")
+
+app.use(cors())
 
 app.use(bodyParser.json())
 
